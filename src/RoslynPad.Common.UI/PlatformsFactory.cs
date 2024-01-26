@@ -65,16 +65,16 @@ internal class PlatformsFactory : IPlatformsFactory
             return (_dotnetExe, _sdkPath);
         }
 
-        string[] dotnetPaths;
+        string?[] dotnetPaths = [Environment.GetEnvironmentVariable("DOTNET_ROOT")];
         string dotnetExe;
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
-            dotnetPaths = [Path.Combine(Environment.GetEnvironmentVariable("ProgramW6432")!, "dotnet")];
+            dotnetPaths ??= [Path.Combine(Environment.GetEnvironmentVariable("ProgramW6432")!, "dotnet")];
             dotnetExe = "dotnet.exe";
         }
         else
         {
-            dotnetPaths = ["/usr/lib64/dotnet", "/usr/share/dotnet", "/usr/local/share/dotnet", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".dotnet")];
+            dotnetPaths ??= ["/usr/lib64/dotnet", "/usr/share/dotnet", "/usr/local/share/dotnet", Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), ".dotnet")];
             dotnetExe = "dotnet";
         }
 
