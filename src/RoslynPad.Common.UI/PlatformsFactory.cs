@@ -64,8 +64,8 @@ internal class PlatformsFactory : IPlatformsFactory
         {
             return (_dotnetExe, _sdkPath);
         }
-
-        string?[] dotnetPaths = [Environment.GetEnvironmentVariable("DOTNET_ROOT")];
+        string? dotnetRootEnviromentVariable = Environment.GetEnvironmentVariable("DOTNET_ROOT");
+        string[]? dotnetPaths = dotnetRootEnviromentVariable is null ? null : [dotnetRootEnviromentVariable];
         string dotnetExe;
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
